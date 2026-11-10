@@ -20,7 +20,7 @@ func _on_visibility_changed():
 
 func update_high_score():
 	okay = true
-	list = game_node.high_score_list.duplicate()
+	list = game_node.save_data.high_score_list.duplicate()
 	#print(list)
 	if(list.has("")):
 		list.erase("")

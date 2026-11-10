@@ -167,64 +167,29 @@ func fill_multiplier_bar(time_left) -> void:
 func color_multiplier_bar() -> void:
 	score_ui.color_multiplier_bar(score_multiplier)
 
+
 func pause_enemies(pause:=true) -> void:
 	for i in get_tree().get_nodes_in_group("pausable"):
 		i.pause(pause)
 	score_multiplier_timer.paused = pause
 
+
+#region Save and Load
+
 #save_score() is called when the player dies and the game is over
 #load_scores() is called in the _ready() function
-var high_score_list : Dictionary
-var high_score_player : String
-#These are two missing variables
-#region Save and Load
+
+@export_global_dir var save_data_path := "user://save_data.tres"
+@export var save_data : SaveData
+
 func save_score() -> void:
-	#if score>high_score:
-		#high_score_player = player_name
-		#high_score = score
-	save_game()
+	ResourceSaver.save(save_data, save_data_path)
 
 
 func load_scores() -> void:
-	load_game()
-
-
-func save() -> Dictionary:
-	if high_score_list.get_or_add(high_score_game_over.player_name,0) <= score_ui.score:
-		high_score_list[high_score_game_over.player_name] = score_ui.score
-	var save_dict := high_score_list
-	return save_dict
-
-
-func save_game():
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
-	var node_data = self.call("save")
-		# # JSON provides a static method to serialized JSON string.
-	var json_string = JSON.stringify(node_data)
-		# # Store the save dictionary as a new line in the save file.
-	save_file.store_line(json_string)
-
-
-func load_game():
-	if not FileAccess.file_exists("user://savegame.save"):
-		return # Error! We don't have a save to load.
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
-	while save_file.get_position() < save_file.get_length():
-		var json_string = save_file.get_line()
-		var json = JSON.new()
-		var parse_result = json.parse(json_string)
-		if not parse_result == OK:
-			#print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
-			continue
-		var node_data = json.data
-		#high_score = 0
-		for i in node_data.keys():
-			high_score_list[i] = node_data[i]
-			#if high_score_list[i]>high_score:
-				#high_score_player = i
-				#high_score = high_score_list[i]
-		#print(high_score_list)
-
+	save_data = ResourceLoader.load(save_data_path)
+	if save_data == null:
+		save_data = load("res://Z - Other files/default_save_data.tres")
 
 #func _exit_tree() -> void:
 	#save_score()
