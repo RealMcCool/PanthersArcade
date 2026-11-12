@@ -1,22 +1,23 @@
 class_name Game extends Node2D
 
-@onready var health_ui := $UI/HealthUI
-@onready var score_ui := $UI/ScoreUI
-@onready var rewind_ui := $UI/RewindUI
+@onready var ui := $UI
+#@onready var health_ui := $UI/HealthUI
+#@onready var score_ui := $UI/ScoreUI # remove?
+#@onready var rewind_ui := $UI/RewindUI # Remove?
 @onready var high_score_game_over := $UI/HighScore
 @onready var high_score_display := $UI/HighScoreDisplay
 @onready var player : Player = $Player
-@onready var rewind_cooldown_timer := $Player/RewindCooldownTimer
+#@onready var rewind_cooldown_timer := $Player/RewindCooldownTimer # remove?
 @onready var background := $Background
-@onready var score_multiplier_timer := $ScoreMultiplierTimer
+@onready var score_multiplier_timer := $ScoreMultiplierTimer # remove?
 @onready var background_music := $Sounds/BackgroundMusic
 @onready var enemy_death := $Sounds/EnemyDeath
-@onready var rewind_color_rect := $UI/RewindColorRect
+#@onready var rewind_color_rect := $UI/RewindColorRect # remove?
 @onready var player_death_sound := $Sounds/PlayerDeath
 @onready var wave_completion_sound := $Sounds/WaveCompletion
 
-var rewind_cooldown_percentage := 1.0
-var max_rewind_bars := 131
+#var rewind_cooldown_percentage := 1.0 # remove?
+#var max_rewind_bars := 131 # remove?
 
 var min_score_multiplier := 1.0
 var score_multiplier_increment := 0.2
@@ -27,19 +28,18 @@ var is_game_over := false
 var boss_number := 0
 
  # INFO: Variable for the lives the player has remaining, with an accompanying set function which updates the UI
-var lives := 3:
+var lives := 5:
 	set(value):
 		lives = value
-		if health_ui:
-			health_ui.init_lives(lives)
-@export var default_lives := 3
+		ui.lives = lives
+@export var default_lives := 5
 
  # INFO: Variable for score
 
 var score := 0:
 	set(value):
 		score = value
-		score_ui.score = score
+		ui.score = score
 
  # INFO: Function run only once when the game starts running
 func _ready() -> void:
@@ -57,7 +57,7 @@ func _ready() -> void:
 		_connect_enemy_signals(enemy)
 		$Enemies.add_child(enemy)
 
-
+#region Enemies
 func _connect_enemy_signals(enemy: Enemy) -> void:
 	enemy.enemy_killed.connect(_on_enemy_killed)
 	enemy.tree_exited.connect(_on_enemy_removed)
@@ -101,7 +101,7 @@ func _on_enemy_killed(score_value) -> void:
 	score_multiplier = snappedf(score_multiplier + score_multiplier_increment, score_multiplier_increment)
 	score_multiplier = minf(score_multiplier, max_score_multiplier)
 	score_multiplier_timer.start()
-	color_multiplier_bar()
+	ui.color_multiplier_bar()
 	enemy_death.play()
 
 
@@ -123,6 +123,13 @@ func _on_enemy_removed() -> void:
 	_spawn_wave()
 
 
+func pause_enemies(pause:=true) -> void:
+	for i in get_tree().get_nodes_in_group("pausable"):
+		i.pause(pause)
+	score_multiplier_timer.paused = pause
+#endregion
+
+
 func game_over() -> void:
 	if is_game_over:
 		return
@@ -141,13 +148,16 @@ func game_over() -> void:
 	player_death_sound.play()
 	player.get_node("AnimatedSprite2D").play("death")
 	await player.get_node("AnimatedSprite2D").animation_finished
+	
 	$UI/ColorRect.hide()
+	
 	high_score_game_over.get_node("VBoxContainer/Score").text = str(score)
 	high_score_game_over.visible = true
 	
 
 
  # Fill the rewind bar, and set its transparency
+"""
 func _physics_process(_delta: float) -> void:
 	rewind_ui.fill_rewind_bar(player.rewind_data_length()/player.max_rewind_length * max_rewind_bars)
 	rewind_cooldown_percentage = (1 - rewind_cooldown_timer.time_left/rewind_cooldown_timer.wait_time)
@@ -166,12 +176,9 @@ func fill_multiplier_bar(time_left) -> void:
 
 func color_multiplier_bar() -> void:
 	score_ui.color_multiplier_bar(score_multiplier)
+"""
 
 
-func pause_enemies(pause:=true) -> void:
-	for i in get_tree().get_nodes_in_group("pausable"):
-		i.pause(pause)
-	score_multiplier_timer.paused = pause
 
 
 #region Save and Load
@@ -193,7 +200,7 @@ func load_scores() -> void:
 
 #func _exit_tree() -> void:
 	#save_score()
-
+#endregion
 
 func _on_background_music_finished() -> void:
 	background_music.play()
