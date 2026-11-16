@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Panthers Arcade Game"
-run/main_scene="res://Scenes/title_screen.tscn"
+run/main_scene="uid://dfn3yen7wbkci"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://8q8un1lun4y3"
 
@@ -42,6 +42,7 @@ enemy_attack="All enemy attacks"
 pausable="Nodes that have pause functions"
 game="Game node"
 player="Player"
+root=""
 
 [gui]
 

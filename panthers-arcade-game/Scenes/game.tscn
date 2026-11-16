@@ -2,13 +2,8 @@
 
 [ext_resource type="Script" uid="uid://ckublskq5hvs" path="res://Scripts/game.gd" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://ca1svep8rjsyl" path="res://Scenes/player.tscn" id="2_qxrlw"]
-[ext_resource type="Script" uid="uid://c7r5o7wxe2vdr" path="res://Scripts/ui.gd" id="2_rfjv2"]
+[ext_resource type="PackedScene" uid="uid://c0csl838ikpca" path="res://Scenes/ui.tscn" id="2_v158k"]
 [ext_resource type="PackedScene" uid="uid://clsccskxsea5v" path="res://Scenes/background.tscn" id="2_wrm1d"]
-[ext_resource type="PackedScene" uid="uid://c0482jq0w4hj8" path="res://Scenes/rewind_ui.tscn" id="3_v158k"]
-[ext_resource type="PackedScene" uid="uid://pckc6srjmu4b" path="res://Scenes/score_ui.tscn" id="4_1l0tm"]
-[ext_resource type="PackedScene" uid="uid://bojuqgkgr8idp" path="res://Scenes/health_ui.tscn" id="5_ui"]
-[ext_resource type="PackedScene" uid="uid://cvc32er767kok" path="res://Scenes/high_score_game_over_screen.tscn" id="5_v158k"]
-[ext_resource type="PackedScene" uid="uid://gfdtqlc0b57g" path="res://Scenes/high_score_display.tscn" id="6_v158k"]
 [ext_resource type="AudioStream" uid="uid://cjwe7ipnmhjbu" path="res://Assets/Sounds/Cartoon Sci-Fi Rattling Impact 1.wav" id="9_h4fw4"]
 [ext_resource type="AudioStream" uid="uid://ccp32bk5g5vma" path="res://Assets/Sounds/3- Dark Fantasy Studio - Laser gun.wav" id="9_rku1e"]
 [ext_resource type="AudioStream" uid="uid://d3kfwx4tjedbk" path="res://Assets/Sounds/Cartoon Sci-Fi Clunky Impact 1.wav" id="10_ldgsr"]
@@ -31,35 +26,7 @@ distance = 180.0
 [node name="Game" type="Node2D" unique_id=1653535691 groups=["game"]]
 script = ExtResource("1_ebmjs")
 
-[node name="UI" type="CanvasLayer" parent="." unique_id=1082573101]
-script = ExtResource("2_rfjv2")
-
-[node name="RewindColorRect" type="ColorRect" parent="UI" unique_id=1674830931]
-visible = false
-offset_right = 1080.0
-offset_bottom = 1920.0
-color = Color(0.3764706, 0, 0.53333336, 0.39215687)
-
-[node name="ColorRect" type="ColorRect" parent="UI" unique_id=226352673]
-offset_right = 1080.0
-offset_bottom = 176.0
-color = Color(0, 0.011764706, 0.23529412, 1)
-
-[node name="HealthUI" parent="UI" unique_id=143631567 instance=ExtResource("5_ui")]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 16.0
-offset_bottom = 16.0
-
-[node name="RewindUI" parent="UI" unique_id=1882639345 instance=ExtResource("3_v158k")]
-
-[node name="ScoreUI" parent="UI" unique_id=2045399400 instance=ExtResource("4_1l0tm")]
-
-[node name="HighScore" parent="UI" unique_id=438450902 instance=ExtResource("5_v158k")]
-visible = false
-
-[node name="HighScoreDisplay" parent="UI" unique_id=2068393492 instance=ExtResource("6_v158k")]
-visible = false
+[node name="UI" parent="." unique_id=87433577 instance=ExtResource("2_v158k")]
 
 [node name="Background" parent="." unique_id=1810696300 instance=ExtResource("2_wrm1d")]
 z_index = -1

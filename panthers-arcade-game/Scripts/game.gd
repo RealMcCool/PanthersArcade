@@ -1,11 +1,12 @@
 class_name Game extends Node2D
 
+@onready var root : Root = get_tree().get_first_node_in_group("root")
 @onready var ui := $UI
 #@onready var health_ui := $UI/HealthUI
 #@onready var score_ui := $UI/ScoreUI # remove?
 #@onready var rewind_ui := $UI/RewindUI # Remove?
-@onready var high_score_game_over := $UI/HighScore
-@onready var high_score_display := $UI/HighScoreDisplay
+#@onready var high_score_game_over := $UI/HighScore
+#@onready var high_score_display := $UI/HighScoreDisplay
 @onready var player : Player = $Player
 #@onready var rewind_cooldown_timer := $Player/RewindCooldownTimer # remove?
 @onready var background := $Background
@@ -40,14 +41,15 @@ var score := 0:
 	set(value):
 		score = value
 		ui.score = score
+		root.score = score
 
  # INFO: Function run only once when the game starts running
 func _ready() -> void:
 	lives = default_lives
 	score = 0
-	high_score_game_over.visible = false
-	high_score_display.visible = false
-	load_scores()
+	#high_score_game_over.visible = false
+	#high_score_display.visible = false
+	root.load_scores()
 	# Spawn wave 1
 	Enemy._current_wave = 1
 	var melee_scene = load("res://Scenes/melee_enemy.tscn")
@@ -151,8 +153,9 @@ func game_over() -> void:
 	
 	$UI/ColorRect.hide()
 	
-	high_score_game_over.get_node("VBoxContainer/Score").text = str(score)
-	high_score_game_over.visible = true
+	root.switch_scene("res://Scenes/high_score_game_over_screen.tscn")
+	#high_score_game_over.get_node("VBoxContainer/Score").text = str(score)
+	#high_score_game_over.visible = true
 	
 
 
@@ -180,7 +183,7 @@ func color_multiplier_bar() -> void:
 
 
 
-
+"""
 #region Save and Load
 
 #save_score() is called when the player dies and the game is over
@@ -201,6 +204,7 @@ func load_scores() -> void:
 #func _exit_tree() -> void:
 	#save_score()
 #endregion
+"""
 
 func _on_background_music_finished() -> void:
 	background_music.play()

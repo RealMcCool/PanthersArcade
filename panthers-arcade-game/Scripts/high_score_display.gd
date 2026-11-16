@@ -1,26 +1,29 @@
 extends Control
 
+@onready var root : Root = get_tree().get_first_node_in_group("root")
 @onready var names = [$Names/Name1, $Names/Name2, $Names/Name3, $Names/Name4, $Names/Name5]
 @onready var nums = [$Nums/Num1, $Nums/Num2, $Nums/Num3, $Nums/Num4, $Nums/Num5]
 @onready var box1 = $Nums
 @onready var box2 = $Names
-@onready var game_node
+#@onready var game_node
 @onready var list
 @onready var okay := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	game_node = get_tree().get_first_node_in_group("game")
-	visibility_changed.connect(_on_visibility_changed)
+	#game_node = get_tree().get_first_node_in_group("game")
+	#visibility_changed.connect(_on_visibility_changed)
+	update_high_score()
+	$PlayButton.grab_focus()
 
-func _on_visibility_changed():
-	if(is_visible_in_tree()):
-		update_high_score()
-		$PlayButton.grab_focus()
+#func _on_visibility_changed():
+	#if(is_visible_in_tree()):
+		#update_high_score()
+		#$PlayButton.grab_focus()
 
 func update_high_score():
 	okay = true
-	list = game_node.save_data.high_score_list.duplicate()
+	list = root.save_data.high_score_list.duplicate()
 	#print(list)
 	if(list.has("")):
 		list.erase("")

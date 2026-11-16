@@ -15,20 +15,28 @@ var max_rewind_bars := 131
 var lives := 5:
 	set(value):
 		if health_ui:
-			health_ui.init_lives(lives)
+			health_ui.init_lives(value)
 
 var score := 0:
 	set(value):
 		#score = value
-		score_ui.score = score
+		score_ui.score = value
 
 # In this class, move all the logic for updating the UI nodes
 
 func _enter_tree() -> void:
+	set_node_vars()
+
+func _ready() -> void:
+	set_node_vars()
+
+func set_node_vars() -> void:
 	game_node = get_tree().get_first_node_in_group("game")
 	player = get_tree().get_first_node_in_group("player")
-	rewind_cooldown_timer = player.get_node("RewindCooldownTimer")
-	score_multiplier_timer = game_node.get_node("ScoreMultiplierTimer")
+	if not player == null:
+		rewind_cooldown_timer = player.get_node("RewindCooldownTimer")
+	if not game_node == null:
+		score_multiplier_timer = game_node.get_node("ScoreMultiplierTimer")
 
 
 func _physics_process(_delta: float) -> void:

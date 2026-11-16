@@ -1,11 +1,12 @@
 extends Control
 
+@onready var root : Root = get_tree().get_first_node_in_group("root")
 @onready var letter1 = $VBoxContainer/Letters/Letter1
 @onready var letter2 = $VBoxContainer/Letters/Letter2
 @onready var letter3 = $VBoxContainer/Letters/Letter3
-@onready var high_score_display
+#@onready var high_score_display
 #@onready var score_scene = get_tree().get("Score")
-@onready var game_node := get_tree().get_first_node_in_group("game")
+#@onready var game_node := get_tree().get_first_node_in_group("game")
 var alph := ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 var letters := []
 var letter_selected := 0
@@ -15,10 +16,17 @@ var player_name := ""
 var not_done := true
 
 func _ready() -> void:
-	high_score_display = get_node("/root/Game/UI/HighScoreDisplay")
+	#high_score_display = get_node("../HighScoreDisplay")
 	letter_selected = 0
 	letters = [letter1, letter2, letter3]
 	current_index = [0,0,0]
+	self.get_node("VBoxContainer/Score").text = str(root.score)
+	self.visible = true
+
+#func _enter_tree() -> void:
+	#self.get_node("VBoxContainer/Score").text = str(root.score)
+	#self.visible = true
+	#pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -70,6 +78,8 @@ func _physics_process(_delta: float) -> void:
 				if (current_index[0] == 22 and current_index[1] == 3 and current_index[2] == 6):
 					player_name = "???"
 				#print("High score confirmed: ", player_name)
-				game_node.save_score()
+				root.save_score()
 				not_done = false
-				high_score_display.visible = true
+				
+				#high_score_display.visible = true
+				root.switch_scene("res://Scenes/high_score_display.tscn")

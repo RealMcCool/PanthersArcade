@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c0csl838ikpca"]
+
+[ext_resource type="Script" uid="uid://c7r5o7wxe2vdr" path="res://Scripts/ui.gd" id="1_2246s"]
+[ext_resource type="PackedScene" uid="uid://bojuqgkgr8idp" path="res://Scenes/health_ui.tscn" id="2_q7pk6"]
+[ext_resource type="PackedScene" uid="uid://c0482jq0w4hj8" path="res://Scenes/rewind_ui.tscn" id="3_m78vo"]
+[ext_resource type="PackedScene" uid="uid://pckc6srjmu4b" path="res://Scenes/score_ui.tscn" id="4_smcll"]
+
+[node name="UI" type="CanvasLayer" unique_id=87433577]
+script = ExtResource("1_2246s")
+
+[node name="RewindColorRect" type="ColorRect" parent="." unique_id=1742019926]
+visible = false
+offset_right = 1080.0
+offset_bottom = 1920.0
+color = Color(0.3764706, 0, 0.53333336, 0.39215687)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=980022260]
+offset_right = 1080.0
+offset_bottom = 176.0
+color = Color(0, 0.011764706, 0.23529412, 1)
+
+[node name="HealthUI" parent="." unique_id=143631567 instance=ExtResource("2_q7pk6")]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="RewindUI" parent="." unique_id=1704646138 instance=ExtResource("3_m78vo")]
+
+[node name="ScoreUI" parent="." unique_id=2045399400 instance=ExtResource("4_smcll")]
