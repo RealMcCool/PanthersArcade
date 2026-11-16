@@ -2,23 +2,13 @@ class_name Game extends Node2D
 
 @onready var root : Root = get_tree().get_first_node_in_group("root")
 @onready var ui := $UI
-#@onready var health_ui := $UI/HealthUI
-#@onready var score_ui := $UI/ScoreUI # remove?
-#@onready var rewind_ui := $UI/RewindUI # Remove?
-#@onready var high_score_game_over := $UI/HighScore
-#@onready var high_score_display := $UI/HighScoreDisplay
 @onready var player : Player = $Player
-#@onready var rewind_cooldown_timer := $Player/RewindCooldownTimer # remove?
 @onready var background := $Background
 @onready var score_multiplier_timer := $ScoreMultiplierTimer # remove?
 @onready var background_music := $Sounds/BackgroundMusic
 @onready var enemy_death := $Sounds/EnemyDeath
-#@onready var rewind_color_rect := $UI/RewindColorRect # remove?
 @onready var player_death_sound := $Sounds/PlayerDeath
 @onready var wave_completion_sound := $Sounds/WaveCompletion
-
-#var rewind_cooldown_percentage := 1.0 # remove?
-#var max_rewind_bars := 131 # remove?
 
 var min_score_multiplier := 1.0
 var score_multiplier_increment := 0.2
@@ -28,6 +18,7 @@ var is_game_over := false
 
 var boss_number := 0
 
+
  # INFO: Variable for the lives the player has remaining, with an accompanying set function which updates the UI
 var lives := 5:
 	set(value):
@@ -35,20 +26,19 @@ var lives := 5:
 		ui.lives = lives
 @export var default_lives := 5
 
- # INFO: Variable for score
 
+ # INFO: Variable for score
 var score := 0:
 	set(value):
 		score = value
 		ui.score = score
 		root.score = score
 
+
  # INFO: Function run only once when the game starts running
 func _ready() -> void:
 	lives = default_lives
 	score = 0
-	#high_score_game_over.visible = false
-	#high_score_display.visible = false
 	root.load_scores()
 	# Spawn wave 1
 	Enemy._current_wave = 1
@@ -58,6 +48,7 @@ func _ready() -> void:
 		enemy.position = Vector2(randf_range(Enemy.WAVE_SPAWN_X_MIN, Enemy.WAVE_SPAWN_X_MAX), -80.0)
 		_connect_enemy_signals(enemy)
 		$Enemies.add_child(enemy)
+
 
 #region Enemies
 func _connect_enemy_signals(enemy: Enemy) -> void:
@@ -154,57 +145,7 @@ func game_over() -> void:
 	$UI/ColorRect.hide()
 	
 	root.switch_scene("res://Scenes/high_score_game_over_screen.tscn")
-	#high_score_game_over.get_node("VBoxContainer/Score").text = str(score)
-	#high_score_game_over.visible = true
-	
 
-
- # Fill the rewind bar, and set its transparency
-"""
-func _physics_process(_delta: float) -> void:
-	rewind_ui.fill_rewind_bar(player.rewind_data_length()/player.max_rewind_length * max_rewind_bars)
-	rewind_cooldown_percentage = (1 - rewind_cooldown_timer.time_left/rewind_cooldown_timer.wait_time)
-	if rewind_cooldown_percentage != 1:
-		rewind_ui.modulate = Color(1.0, 1.0, 1.0, rewind_cooldown_percentage/2)
-	else:
-		rewind_ui.modulate = Color(1.0, 1.0, 1.0, 1.0)
-	fill_multiplier_bar(score_multiplier_timer.time_left)
-	rewind_color_rect.visible = player.rewinding
-
-
-func fill_multiplier_bar(time_left) -> void:
-	score_ui.fill_cooldown_bar(time_left, score_multiplier)
-	color_multiplier_bar()
-
-
-func color_multiplier_bar() -> void:
-	score_ui.color_multiplier_bar(score_multiplier)
-"""
-
-
-
-"""
-#region Save and Load
-
-#save_score() is called when the player dies and the game is over
-#load_scores() is called in the _ready() function
-
-@export_global_dir var save_data_path := "user://save_data.tres"
-@export var save_data : SaveData
-
-func save_score() -> void:
-	ResourceSaver.save(save_data, save_data_path)
-
-
-func load_scores() -> void:
-	save_data = ResourceLoader.load(save_data_path)
-	if save_data == null:
-		save_data = load("res://Z - Other files/default_save_data.tres")
-
-#func _exit_tree() -> void:
-	#save_score()
-#endregion
-"""
 
 func _on_background_music_finished() -> void:
 	background_music.play()

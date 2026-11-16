@@ -43,24 +43,6 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 alignment = 2
 
-[node name="Title" type="Label" parent="VBoxContainer" unique_id=546456970]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.361, 1, 1)
-theme_override_font_sizes/font_size = 144
-text = "PHASE
-SPECTOR"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Subtitle" type="Label" parent="VBoxContainer" unique_id=1189374480]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0.969, 1, 1)
-theme_override_font_sizes/font_size = 64
-text = "Rewind. Strike. Survive."
-horizontal_alignment = 1
-
 [node name="Spacer" type="Control" parent="VBoxContainer" unique_id=21073332]
 visible = false
 custom_minimum_size = Vector2(0, 60)

@@ -1,29 +1,15 @@
 class_name Root extends Node
 
 
-#var score := 0:
-	#get():
-		#for i in self.get_children():
-			#if i is Game:
-				#return i.score
-		#return 0
-		
 var score := 0
-
-#var score := 0:
-	#set(value):
-		#score = value
-		#print(value)
 
 
 func switch_scene(new_scene: String) -> void:
-	for i in self.get_children():
+	for i in $ActiveScene.get_children():
 		i.queue_free()
 	var new_scene_loaded : PackedScene = load(new_scene)
 	var new_scene_node : Node = new_scene_loaded.instantiate()
-	self.add_child(new_scene_node)
-	#self.add_child(load(new_scene).instantiate)
-
+	$ActiveScene.add_child(new_scene_node)
 
 
 #region Save and Load

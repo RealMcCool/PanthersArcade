@@ -5,21 +5,14 @@ extends Control
 @onready var nums = [$Nums/Num1, $Nums/Num2, $Nums/Num3, $Nums/Num4, $Nums/Num5]
 @onready var box1 = $Nums
 @onready var box2 = $Names
-#@onready var game_node
 @onready var list
 @onready var okay := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#game_node = get_tree().get_first_node_in_group("game")
-	#visibility_changed.connect(_on_visibility_changed)
 	update_high_score()
 	$PlayButton.grab_focus()
 
-#func _on_visibility_changed():
-	#if(is_visible_in_tree()):
-		#update_high_score()
-		#$PlayButton.grab_focus()
 
 func update_high_score():
 	okay = true
@@ -49,6 +42,7 @@ func _input(event: InputEvent) -> void:
 	if is_visible_in_tree() and event is InputEventKey and event.pressed and event.keycode == KEY_SPACE:
 		_on_play_button_pressed()
 
+
 func _on_play_button_pressed() -> void:
 	ButtonSounds.play()
-	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
+	get_tree().get_first_node_in_group("root").switch_scene("res://Scenes/title_screen.tscn")

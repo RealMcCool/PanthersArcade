@@ -7,3 +7,6 @@
 script = ExtResource("1_8pvmw")
 
 [node name="TitleScreen" parent="." unique_id=1574181918 instance=ExtResource("2_vnucn")]
+[node name="ActiveScene" type="Node" parent="." unique_id=1750793934]
+
+[node name="TitleScreen" parent="ActiveScene" unique_id=1574181918 instance=ExtResource("2_vnucn")]

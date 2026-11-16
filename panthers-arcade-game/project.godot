@@ -21,7 +21,7 @@ config/icon="uid://8q8un1lun4y3"
 
 [audio]
 
-buses/default_bus_layout="res://Z - Other files/default_bus_layout.tres"
+buses/default_bus_layout="uid://dwx61pc4gtrrd"
 
 [autoload]
 

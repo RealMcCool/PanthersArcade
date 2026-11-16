@@ -12,17 +12,13 @@ var list_to_remove : Array[Node]
 func _ready() -> void:
 	default_lives = get_tree().get_first_node_in_group("game").default_lives
 
+
  # INFO: Sets the number of lives displayed in the UI to be equal to a new amount
 func init_lives(amount:int):
-	#if lives.get_children().size() == amount:
-		#return
-	#var sprite_num = mini(amount, default_lives)
 	for u in lives.get_children():
 		u.queue_free()
-	#for i in sprite_num:
-		#var ul = uilife_scene.instantiate()
-		#lives.add_child(ul)
 	fill_by_amount(amount)
+
 
 func fill_by_amount(amount:int) -> void:
 	var amount_of_1 := 0

@@ -6,10 +6,10 @@ extends CanvasLayer
 @onready var health_ui := $HealthUI
 @onready var score_ui := $ScoreUI
 @onready var game_node : Game = get_parent()
-@onready var player : Player# = $"../Player"
-@onready var rewind_cooldown_timer : Timer # = $Player/RewindCooldownTimer
+@onready var player : Player
+@onready var rewind_cooldown_timer : Timer
 var rewind_cooldown_percentage := 1.0
-@onready var score_multiplier_timer : Timer # = $ScoreMultiplierTimer
+@onready var score_multiplier_timer : Timer
 var max_rewind_bars := 131
 
 var lives := 5:
@@ -19,7 +19,6 @@ var lives := 5:
 
 var score := 0:
 	set(value):
-		#score = value
 		score_ui.score = value
 
 # In this class, move all the logic for updating the UI nodes
