@@ -46,6 +46,7 @@ root=""
 
 [gui]
 
+theme/custom="uid://dofq04ng4ioj2"
 theme/custom_font="uid://qh5fftfnatcb"
 
 [input]
