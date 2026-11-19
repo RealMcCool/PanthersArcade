@@ -19,7 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0.012, 0.235, 1)
+color = Color(0.30588236, 0.43137255, 0.65882355, 1)
 
 [node name="TitleScreenImage" type="TextureRect" parent="." unique_id=702097398]
 layout_mode = 0
